@@ -1,20 +1,3 @@
-if(1==2){
-  net <- dixon
-  trait.variable <- "sex"
-  sample.size <- 200
-  seed.selection="degree"
-  number.of.seeds=10
-  number.of.coupons=2
-  max.degree=NULL
-  use.C.sampler=FALSE
-  recruitment.rates=NULL
-  recruitment.rates.by="disease"
-  sample.with.replacement=FALSE
-  verbose=TRUE
-}
-
-
-
 getRDSsample <- function(net,trait.variable="disease",sample.size=500, 
  seed.selection="degree", number.of.seeds=10, number.of.coupons=2,
  max.degree=NULL, use.C.sampler=FALSE, recruitment.rates=NULL,
