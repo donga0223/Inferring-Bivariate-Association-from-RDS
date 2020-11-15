@@ -24,7 +24,7 @@ if(2==3){
 ## n : number of permutations
 ################################
 
-SPRTBA <- function(net, fix.variable, permute.variable, test = chisq.test, n, correct = TRUE)
+permutation.test.II <- function(net, fix.variable, permute.variable, test = chisq.test, n, correct = TRUE)
 {
   if(is.rds.data.frame(net)==FALSE){
     stop(sprintf("net must be an rds.data.frame"))
@@ -119,7 +119,7 @@ SPRTBA <- function(net, fix.variable, permute.variable, test = chisq.test, n, co
 ## n : number of permutations
 ################################
 
-SPRTBA.both <- function(net, fix.variable, permute.variable, test = chisq.test, n, correct = TRUE)
+permutation.test.both <- function(net, fix.variable, permute.variable, test = chisq.test, n, correct = TRUE)
 {
   if(is.rds.data.frame(net)==FALSE){
     stop(sprintf("net must be an rds.data.frame"))
