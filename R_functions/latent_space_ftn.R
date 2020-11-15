@@ -71,7 +71,7 @@ gen_latent_space <- function(Sigma = NULL, maxunif =10, sample.size = 2000, myse
 source("getRDSsample.R")
 source("rdssamplecode.krista.R")
 source("as.network.uncompressed.R")
-source("sim.permutation.test.R")
+source("SPRTBA_function.R")
 
 library(RDS)
 

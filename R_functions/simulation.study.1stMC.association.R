@@ -4,7 +4,7 @@
 source("getRDSsample.R")
 source("rdssamplecode.krista.R")
 source("as.network.uncompressed.R")
-source("sim.permutation.test.R")
+source("SPRTBA_function.R")
 
 library(RDS)
 library(network)
