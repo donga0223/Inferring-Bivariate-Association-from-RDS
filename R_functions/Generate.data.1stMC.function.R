@@ -1,11 +1,10 @@
 
 ##########################################
 ## iter : number of repeat the whole process
-## number.of.seeds : this is RDS data, so we need the number of seeds size for sampling
+## number.of.seeds : this is RDS data, so we need the number of seeds 
 ## sample.size : desired sample size
 ## AA, BB : probabilites of transition from X1 vales "A" to "A" or B" to "B"
 ## x00, x11 : probabilites of transition from X2 vales "0" to "0" or 1" to "1"
-
 ## per.iter : number of iteration for the permutation test
 ##########################################
 
@@ -40,9 +39,6 @@ for(j in 1:iter){
   degree <- sample(1:30, sample.size, replace=T)
   dat <- data.frame(id, rec.id, degree)
   
-  
-  ## cori.03.1: c(0.91, 0.09, 0.44, 0.56)
-  ## cori.15.1: c(0.85, 0.15, 0.18, 0.82)
   myprob.char1 <- matrix(c(AA, 1-AA, 1-BB, BB),nrow=2)
   
   char1 <- rep(NA,sample.size)
@@ -60,8 +56,6 @@ for(j in 1:iter){
   levels(char1) <- c("A", "B")
   
   
-  ## cori.03.1: c(0.48, 0.52, .35, .65)
-  ## cori.15.1: c(0.64, 0.36, .54, .46)
   myprob.char2 <- matrix(c(x00, 1-x00, 1-x11, x11), nrow=2)
   
   char2 <- rep(NA,sample.size)
@@ -86,14 +80,12 @@ for(j in 1:iter){
                           network.size="degree",
                           population.size=15000)
   
-  chisq.res[j] <- chisq.test(char1, char2, correct = correct)$p.value
+  chisq.res[j] <- chisq.test(dat$char1, dat$char2, correct = correct)$p.value
   
-  permute.test1 <- permutation.test.II(dat, "char1", "char2", chisq.test, per.iter, c("0", "1"))
-  permute.res1[j] <- permute.test1$p.value
+  permute.test1 <- SPRTBA(dat, "char1", "char2", chisq.test, per.iter)
   permute.res1.mc[j] <- permute.test1$p.value.mc
    
-  permute.test2 <- permutation.test.II(dat, "char2", "char1",  chisq.test, per.iter, c("A", "B"))
-  permute.res2[j] <- permute.test2$p.value
+  permute.test2 <- SPRTBA(dat, "char2", "char1",  chisq.test, per.iter)
   permute.res2.mc[j] <- permute.test2$p.value.mc
   
   print(j)
@@ -101,8 +93,8 @@ for(j in 1:iter){
   
 }
 
-res <- data.frame(chisq.res, permute.res1, permute.res2, permute.res1.mc, permute.res2.mc)
-return(res = res)
+res <- data.frame(chisq.res, permute.res1.mc, permute.res2.mc)
+return(res)
 
 }
 

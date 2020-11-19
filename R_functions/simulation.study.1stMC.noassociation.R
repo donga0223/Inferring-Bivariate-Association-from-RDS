@@ -4,6 +4,7 @@
 ##########################################################################
 ### Independent Case
 
+setwd("/Users/dongahkim/Dropbox/Cori_data/paper_code/R_functions")
 library(RDS)
 library(network)
 
@@ -25,7 +26,7 @@ for(i in 1:length(name)){
   
   
   assign(paste("sim.study.1stMC", name[i], "bothstrong", sep=".")
-         , Generate.data(iter, number.of.seeds, sample.size, AA[i], BB[i], AA[i], BB[i], correct = F, per.iter = 1000))
+         , Generate.data(iter, number.of.seeds, sample.size, AA[i], BB[i], AA[i], BB[i], correct = FALSE, per.iter = 1000))
   
   save.image(file=paste("sim.study.1stMC", name[i], "bothstrong", "RData", sep = "."))
   
@@ -39,7 +40,7 @@ for(i in 1:length(name)){
   
   
   assign(paste("sim.study.1stMC", name[i], "bothweak", sep=".")
-         , Generate.data(iter, number.of.seeds, sample.size, x00[i], x11[i], x00[i], x11[i], correct = F, per.iter = 1000))
+         , Generate.data(iter, number.of.seeds, sample.size, x00[i], x11[i], x00[i], x11[i], correct = FALSE, per.iter = 1000))
   
   save.image(file=paste("sim.study.1stMC", name[i], "bothweak", "RData", sep = "."))
   

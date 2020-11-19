@@ -24,7 +24,7 @@ if(2==3){
 ## n : number of permutations
 ################################
 
-permutation.test.II <- function(net, fix.variable, permute.variable, test = chisq.test, n, correct = TRUE)
+SPRTBA <- function(net, fix.variable, permute.variable, test = chisq.test, n, correct = TRUE)
 {
   if(is.rds.data.frame(net)==FALSE){
     stop(sprintf("net must be an rds.data.frame"))
@@ -101,7 +101,7 @@ permutation.test.II <- function(net, fix.variable, permute.variable, test = chis
               ,n.iteration = n
               ,per.test.res = per.test.res
               ,observed.test = obs.test.res
-              ,p.value = p.value
+              #,p.value = p.value
               ,p.value.mc = p.value.mc
               ,permute.var.prop = permute.var.prop
               ,fix.var.prop = fix.var.prop
@@ -113,13 +113,13 @@ permutation.test.II <- function(net, fix.variable, permute.variable, test = chis
 
 ################################
 ## net : RDS data
-## fix.variable : variable 1
-## permute.variable : variable 2 
-## In this test, we permute both variables, so you don't need to consider which is fixed and which is permuted
+## fix.variable : variable 1 for bivariate association test
+## permute.variable : variable 2 for bivariate association test
+## In this test, we permute both variables, so you don't need to consider which one is fixed and which one is permuted
 ## n : number of permutations
 ################################
 
-permutation.test.both <- function(net, fix.variable, permute.variable, test = chisq.test, n, correct = TRUE)
+SPRTBA.both <- function(net, fix.variable, permute.variable, test = chisq.test, n, correct = TRUE)
 {
   if(is.rds.data.frame(net)==FALSE){
     stop(sprintf("net must be an rds.data.frame"))
@@ -215,7 +215,7 @@ permutation.test.both <- function(net, fix.variable, permute.variable, test = ch
               ,iteration = n
               ,per.test.res = per.test.res
               ,observed.test = obs.test.res
-              ,p.value = p.value
+              #,p.value = p.value
               ,p.value.mc = p.value.mc
               ,permute.var.prop = permute.var.prop
               ,fix.var.prop = fix.var.prop
