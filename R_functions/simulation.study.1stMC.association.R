@@ -1,5 +1,5 @@
 
-
+setwd("/Users/dongahkim/Dropbox/Cori_data/paper_code/R_functions")
 
 source("getRDSsample.R")
 source("rdssamplecode.krista.R")
@@ -10,15 +10,7 @@ library(RDS)
 library(network)
 
 
-if(2==3){
-  data <- pops.13.1
-  iter <- 100
-}
-
-
-
-
-rds.per.test <- function(data, iter, sample.size = 500, number.of.seeds = 10, per.iter = 100, correct = F){
+rds.SPRTBA <- function(data, iter, sample.size = 500, number.of.seeds = 10, per.iter = 100, correct = FALSE){
   
   net <- data
   cg <- get.vertex.attribute(net, "cg")
@@ -75,14 +67,14 @@ rds.per.test <- function(data, iter, sample.size = 500, number.of.seeds = 10, pe
                                       , population.size = N)
     chisq.res.net[i] <- chisq.test(net.RDS.data$group, net.RDS.data$class, correct = correct)$p.value
     
-    permute.res1.net <- permutation.test.II(net.RDS.data, "group", "class", chisq.test, per.iter, c("A", "B"), correct = correct)
+    permute.res1.net <- SPRTBA(net.RDS.data, "group", "class", chisq.test, per.iter, correct = correct)
     permute.res1.mc.net[i] <- permute.res1.net$p.value.mc
     res1.permute.var.11[i] <- permute.res1.net$permute.var.prop[1,1]
     res1.permute.var.22[i] <- permute.res1.net$permute.var.prop[2,2]
     res1.fix.var.11[i] <- permute.res1.net$fix.var.prop[1,1]
     res1.fix.var.22[i] <- permute.res1.net$fix.var.prop[2,2]
     
-    permute.res2.net <- permutation.test.II(net.RDS.data, "class", "group", chisq.test, per.iter, c("0", "1"), correct = correct)
+    permute.res2.net <- SPRTBA(net.RDS.data, "class", "group", chisq.test, per.iter, correct = correct)
     permute.res2.mc.net[i] <- permute.res2.net$p.value.mc
     res2.permute.var.11[i] <- permute.res2.net$permute.var.prop[1,1]
     res2.permute.var.22[i] <- permute.res2.net$permute.var.prop[2,2]
@@ -91,9 +83,6 @@ rds.per.test <- function(data, iter, sample.size = 500, number.of.seeds = 10, pe
     
     rm(net.RDS, merge.net.data, net.RDS.data)
     print(i)
-    #print(chisq.res.net[i])
-    #print(permute.res1.net[i])
-    #print(permute.res2.net[i])
   }
   
   res.net <- data.frame(chisq.res.net, permute.res1.mc.net, permute.res2.mc.net
@@ -118,16 +107,22 @@ rds.per.test <- function(data, iter, sample.size = 500, number.of.seeds = 10, pe
               ,res.net = res.net))
 }
 
+setwd("/Users/dongahkim/Dropbox/Cori_data/pops_paper")
 
-load("pops.01.1.RData")
-data <- pops.01.1
-iter <- 1000
+name <- c("01", "03", "04", "06", "08", "09", "10", "12", "13", "14", "15", "16", "17")
 
-sample.size <- 500
-number.of.seeds <- 10
-per.iter <- 100
-
-cori.01.1 <- rds.per.test(data, iter, sample.size = sample.size, correct = F)
-
-save.image(file="coridata.01.1.RData")
+for(i in 1:length(name)){
+  load(paste("pops",name[i],"1","RData",sep="."))
+  data <- get(paste("pops", name[i],"1", sep="."))
+  
+  iter <- 1000
+  sample.size <- 500
+  number.of.seeds <- 10
+  per.iter <- 100
+  
+  assign(paste("sim.association", name[i], sep=".")
+         , rds.SPRTBA(data, iter, sample.size = sample.size, correct = FALSE))
+  
+  save.image(file=paste("sim.association", name[i], "RData", sep = "."))
+}
 
