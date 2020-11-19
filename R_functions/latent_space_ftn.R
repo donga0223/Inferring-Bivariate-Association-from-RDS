@@ -1,4 +1,3 @@
-library(igraph)
 library(network)
 library(MASS)
 if(2==3){
@@ -10,15 +9,15 @@ if(2==3){
   beta = c(1,2)
   a = 0
   b = 1
-  permutation_test(RDS.size = 100, number.of.seeds = 10, per.iter = 100, correct = T)
-  
+  net <- gen_latent_space(Sigma = NULL, maxunif =10, sample.size = 2000, myseed = 1234, alpha = 2, beta = c(1,2), a = 0, b = 1)
+    
 }
 
 
 #a = 0 independent
 #a != 0 dependent
-# Sigma = NA -> two independent uniform distribution
-# Sigma not NA -> multivariate normal
+# Sigma = NULL -> two independent uniform distribution
+# Sigma not NULL and 2 by 2 matrix -> multivariate normal
 gen_latent_space <- function(Sigma = NULL, maxunif =10, sample.size = 2000, myseed = myseed, alpha = 2, beta = c(1,2), a = 0, b = 1){
   set.seed(myseed)
   if(is.null(Sigma)==FALSE){
@@ -67,7 +66,6 @@ gen_latent_space <- function(Sigma = NULL, maxunif =10, sample.size = 2000, myse
 }
 
 
-#setwd("/Users/dongahkim/Dropbox/Cori_data/Coridata")
 source("getRDSsample.R")
 source("rdssamplecode.krista.R")
 source("as.network.uncompressed.R")
@@ -86,11 +84,11 @@ if(2 == 3){
   net <- gen_latent_space(Sigma = NULL, maxunif =15, sample.size = 1000, myseed = i, alpha = -min(c(3,5)), beta = c(3,5), a = 0, b = 1)
   net
   plot(net)
-  permutation_test(net, RDS.size = 100, number.of.seeds = 10, per.iter = 100, correct = T)
+  latentspace_SPRTBA(net, RDS.size = 100, number.of.seeds = 10, per.iter = 100, correct = T)
 }
 
 
-permutation_test <- function(net, RDS.size = 500, number.of.seeds = 10, per.iter = 100, correct = T){
+latentspace_SPRTBA <- function(net, RDS.size = 500, number.of.seeds = 10, per.iter = 100, correct = T){
   group <- get.vertex.attribute(net, "group")
   class <- get.vertex.attribute(net, "class")
   id <- get.vertex.attribute(net, "vertex.names")
@@ -126,11 +124,10 @@ permutation_test <- function(net, RDS.size = 500, number.of.seeds = 10, per.iter
                                     , network.size = "degree" )
   chisq.res.net <- chisq.test(net.RDS.data$group, net.RDS.data$class, correct = correct)$p.value
   
-  permute.res1 <- permutation.test.II(net.RDS.data, "group", "class", chisq.test, per.iter)
-  permute.res2 <- permutation.test.II(net.RDS.data, "class", "group", chisq.test, per.iter)
+  permute.res1 <- SPRTBA(net.RDS.data, "group", "class", chisq.test, per.iter)
+  permute.res2 <- SPRTBA(net.RDS.data, "class", "group", chisq.test, per.iter)
   
-  permute.res.both <- permutation.test.both.II(net.RDS.data, "group", "class", chisq.test, per.iter)
-  #permute.res2 <- permutation.test.both.II(net.RDS.data, "class", "group", chisq.test, per.iter)
+  permute.res.both <- SPRTBA.both(net.RDS.data, "group", "class", chisq.test, per.iter)
   
   res <- data.frame(mean_deg = mean(deg)
                     , chisq.class= chisq.class$p.value
