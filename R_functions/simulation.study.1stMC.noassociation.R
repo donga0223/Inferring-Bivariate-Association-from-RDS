@@ -4,7 +4,6 @@
 ##########################################################################
 ### Independent Case
 
-setwd("/Users/dongahkim/Dropbox/Cori_data/paper_code/R_functions")
 library(RDS)
 library(network)
 
