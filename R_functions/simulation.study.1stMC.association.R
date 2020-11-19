@@ -1,5 +1,4 @@
 
-setwd("/Users/dongahkim/Dropbox/Cori_data/paper_code/R_functions")
 
 source("getRDSsample.R")
 source("rdssamplecode.krista.R")
@@ -107,7 +106,6 @@ rds.SPRTBA <- function(data, iter, sample.size = 500, number.of.seeds = 10, per.
               ,res.net = res.net))
 }
 
-setwd("/Users/dongahkim/Dropbox/Cori_data/pops_paper")
 
 name <- c("01", "03", "04", "06", "08", "09", "10", "12", "13", "14", "15", "16", "17")
 
