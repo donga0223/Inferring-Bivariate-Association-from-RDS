@@ -18,6 +18,7 @@ if(2==3){
 }
 
 ################################
+## This is the SPRTBA function that permutes one variable and fixes the other.
 ## net : RDS data
 ## fix.variable : variable name for not permuting
 ## permute.variable : variable name for permuting
@@ -112,6 +113,7 @@ SPRTBA <- function(net, fix.variable, permute.variable, test = chisq.test, n, co
 
 
 ################################
+## This is the SPRTBA function that permutes two variables together.
 ## net : RDS data
 ## fix.variable : variable 1 for bivariate association test
 ## permute.variable : variable 2 for bivariate association test

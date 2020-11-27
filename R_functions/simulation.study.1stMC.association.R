@@ -1,4 +1,4 @@
-
+## This is R code for getting results for our paper Section 4.3.3. 
 
 source("getRDSsample.R")
 source("rdssamplecode.krista.R")
@@ -9,7 +9,7 @@ library(RDS)
 library(network)
 
 
-rds.SPRTBA <- function(data, iter, sample.size = 500, number.of.seeds = 10, per.iter = 100, correct = FALSE){
+asso.SPRTBA <- function(data, iter, sample.size = 500, number.of.seeds = 10, per.iter = 100, correct = FALSE){
   
   net <- data
   cg <- get.vertex.attribute(net, "cg")
@@ -107,11 +107,11 @@ rds.SPRTBA <- function(data, iter, sample.size = 500, number.of.seeds = 10, per.
 }
 
 
-name <- c("01", "03", "04", "06", "08", "09", "10", "12", "13", "14", "15", "16", "17")
+name <- as.character(5:13)
 
 for(i in 1:length(name)){
-  load(paste("pops",name[i],"1","RData",sep="."))
-  data <- get(paste("pops", name[i],"1", sep="."))
+  load(paste("pops",name[i],"RData",sep="."))
+  data <- get(paste("pops", name[i], sep="."))
   
   iter <- 1000
   sample.size <- 500
@@ -119,7 +119,7 @@ for(i in 1:length(name)){
   per.iter <- 100
   
   assign(paste("sim.association", name[i], sep=".")
-         , rds.SPRTBA(data, iter, sample.size = sample.size, correct = FALSE))
+         , asso.SPRTBA(data, iter, sample.size = sample.size, correct = FALSE))
   
   save.image(file=paste("sim.association", name[i], "RData", sep = "."))
 }

@@ -18,6 +18,8 @@ if(2==3){
 #a != 0 dependent
 # Sigma = NULL -> two independent uniform distribution
 # Sigma not NULL and 2 by 2 matrix -> multivariate normal
+# beta : can control the homophily effects. 
+## When beta closes to 0, there is no homophily. WHen beta >> 1 , there is a strong homophily.
 gen_latent_space <- function(Sigma = NULL, maxunif =10, sample.size = 2000, myseed = myseed, alpha = 2, beta = c(1,2), a = 0, b = 1){
   set.seed(myseed)
   if(is.null(Sigma)==FALSE){
@@ -87,6 +89,9 @@ if(2 == 3){
   latentspace_SPRTBA(net, RDS.size = 100, number.of.seeds = 10, per.iter = 100, correct = T)
 }
 
+
+##net : latent space model data generated from the ``gen_latent_space'' function.
+## RDS.size : number of sample size sampling RDS method.
 
 latentspace_SPRTBA <- function(net, RDS.size = 500, number.of.seeds = 10, per.iter = 100, correct = T){
   group <- get.vertex.attribute(net, "group")
