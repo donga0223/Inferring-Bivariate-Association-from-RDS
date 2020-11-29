@@ -1,6 +1,6 @@
 # Inferring-Bivariate-Association-from-RDS
 
-This repository refers to the paper Dongah Kim, Krista J. Gile (2020). Inferring Bivariate Association from Respondent-Driven Sampling Data. In this paper, we proposed a method to semi-parametrically estimate the null distributions of standard test statistics in the presence of sampling dependence, allowing for more valid statistical testing for dependence between pairs of variables within the sample. 
+This repository refers to the paper Dongah Kim, Krista J. Gile, Honoria Guarino and Pedro Mateu-Gelabert (2020). Inferring Bivariate Association from Respondent-Driven Sampling Data. In this paper, we proposed a method to semi-parametrically estimate the null distributions of standard test statistics in the presence of sampling dependence, allowing for more valid statistical testing for dependence between pairs of variables within the sample. 
 
 [data](https://github.com/donga0223/Inferring-Bivariate-Association-from-RDS/tree/master/data) contains generated data for Section 4.3.3.
 
