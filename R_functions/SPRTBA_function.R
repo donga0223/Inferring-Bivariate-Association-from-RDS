@@ -1,3 +1,5 @@
+library(tidyverse)
+
 if(2==3){
   net <- dat
   fix.variable <- "char1"
